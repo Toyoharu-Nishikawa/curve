@@ -1,0 +1,14 @@
+version: '2'
+services:
+  nginx:
+    image: nginx
+    restart: always
+    volumes:
+      - ./public:/usr/share/nginx/html
+      - ./conf.d:/etc/nginx/conf.d
+      - /var/log/curve:/var/log/nginx
+    networks:
+      - neco_link
+networks:
+  neco_link:
+    external: true
