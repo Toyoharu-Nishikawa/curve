@@ -107,9 +107,9 @@ Gaspath.reader = {
               let xyz = line[i].split(/\s+/).filter(function(value,index,self){
                 return value !="";
               });
-              sectionData.x.push(xyz[0]);
-              sectionData.y.push(xyz[1]);
-              sectionData.z.push(xyz[2]);
+              sectionData.x.push(parseFloat(xyz[0]));
+              sectionData.y.push(parseFloat(xyz[1]));
+              sectionData.z.push(parseFloat(xyz[2]));
             }
           }
           readData.push(sectionData);
