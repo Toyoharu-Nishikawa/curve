@@ -52,7 +52,7 @@ Gaspath.save = {
   },
   saveTag: function(element){
     element.addEventListener('click',()=>{
-      let svgString = draw.screen.svg();
+      let svgString = Gaspath.svg.draw.screen.svg();
       this.saveStringAsFile(svgString, 'curve.svg');
     },false);
   }
