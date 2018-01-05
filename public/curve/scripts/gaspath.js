@@ -4,16 +4,23 @@ Gaspath.svg = {
   draw: null,
   sheetNumber: 0,
   inputButton: null,
+  downloadButton: null,
   init: function(id, default_width, default_height, bool=true){
      if(bool){
       let form = document.createElement('form');
       let input = document.createElement('input')
+      let download = document.createElement('input')
       input.type = "file"
       input.multiple = true;
+      download.type = "button"
+      download.value = "download svg"
       form.appendChild(input);
+      form.appendChild(download);
       document.getElementById(id).appendChild(form);
-      this.inputButton = input
+      this.inputButton = input;
+      this.downloadButton = download;
       Gaspath.reader.set(input);
+      Gaspath.save.saveTag(download)
     }
     this.draw = SVG(id).panZoom({zoomFactor:1.1});
     this.draw.width(default_width);
@@ -36,6 +43,18 @@ Gaspath.svg = {
     this.draw.screen = this.draw.group();
     this.draw.screen.background = background;
     this.draw.screen.sheet = [];
+  }
+}
+Gaspath.save = {
+  saveStringAsFile: function(string,filename){
+    var blob = new Blob([string], {type: 'text/plain; charset=utf-8'});
+    saveAs(blob, filename);
+  },
+  saveTag: function(element){
+    element.addEventListener('click',()=>{
+      let svgString = Gaspath.svg.draw.screen.svg();
+      this.saveStringAsFile(svgString, 'curve.svg');
+    },false);
   }
 }
 Gaspath.reader = {
@@ -88,9 +107,9 @@ Gaspath.reader = {
               let xyz = line[i].split(/\s+/).filter(function(value,index,self){
                 return value !="";
               });
-              sectionData.x.push(xyz[0]);
-              sectionData.y.push(xyz[1]);
-              sectionData.z.push(xyz[2]);
+              sectionData.x.push(parseFloat(xyz[0]));
+              sectionData.y.push(parseFloat(xyz[1]));
+              sectionData.z.push(parseFloat(xyz[2]));
             }
           }
           readData.push(sectionData);
