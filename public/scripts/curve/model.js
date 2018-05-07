@@ -36,7 +36,7 @@ export const model = {
           const sectionData = {x:[],y:[],z:[]};
           const line = section.split(/\r\n|\r|\n/);
           for(let i=0; i<line.length; i=i+1){
-            if(line[i] !=""){
+            if(/\d+/.test(line[i])){
               const xyz = line[i].split(/\s+/)
                 .filter(value=>{return value !=""});
               sectionData.x.push(parseFloat(xyz[0]));
